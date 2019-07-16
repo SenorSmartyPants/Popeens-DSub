@@ -9,7 +9,7 @@ android {
 		minSdkVersion 14
 		targetSdkVersion 26
 		versionCode 33
-		versionName '1.0.20'
+		versionName '1.0.20-smarty'
 		setProperty("archivesBaseName", "Booksonic $versionName")
 		resConfigs "sv"
 	}
