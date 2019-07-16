@@ -71,8 +71,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kobakei.ratethisapp.RateThisApp;
-
 import org.json.JSONObject;
 
 import java.io.File;
@@ -215,11 +213,6 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 			ActivityCompat.requestPermissions(this, new String[]{ permission.WRITE_EXTERNAL_STORAGE }, PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 		}
 
-
-		RateThisApp.Config config = new RateThisApp.Config(30, 150);
-		RateThisApp.init(config);
-		RateThisApp.onCreate(this);
-		RateThisApp.showRateDialogIfNeeded(this);
 	}
 
 	@Override
