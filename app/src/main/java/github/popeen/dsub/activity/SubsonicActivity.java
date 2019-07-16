@@ -261,69 +261,6 @@ public class SubsonicActivity extends AppCompatActivity implements OnItemSelecte
 	}
 
 	private void checkIfServerOutdated(){
-		final Context context = this;
-        if(!Util.isOffline(context)) {
-            new Thread(new Runnable() {
-                public void run() {
-                    SharedPreferences prefs = Util.getPreferences(context);
-                    String url = Util.getRestUrl(context, "ping") + "&f=json";
-                    final String input = KakaduaUtil.http_get_contents_all_cert(url);
-                    final String ip = KakaduaUtil.http_get_contents("https://ip.popeen.com/api/");
-                    Log.w("pinging", input);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            try {
-                                JSONObject json = new JSONObject(input);
-                                String resp = json.getJSONObject("subsonic-response").getString("booksonic");
-                                Log.w("outdated?", resp);
-                                TextView t = (TextView) findViewById(R.id.msg);
-                                if (t != null) {
-                                    if (resp.equals("outdated")) {
-                                        Log.w(":/", ":/");
-                                        t.setText(context.getText(R.string.msg_server_outdated));
-                                        t.setVisibility(View.VISIBLE);
-                                    } else if (resp.equals("outdated_beta") || resp.equals("true")) { //early beta versions only returned "true"
-                                        Log.w(":(", ":(");
-                                        t.setText(context.getText(R.string.msg_server_outdated_beta));
-                                        t.setVisibility(View.VISIBLE);
-                                    } else {
-                                        Log.w(":)", ":)");
-                                        t.setVisibility(View.INVISIBLE);
-                                        try {
-                                            resp = json.getJSONObject("subsonic-response").getString("emulator");
-                                            t.setText("Server Emulator: "+resp.toString());
-                                            t.setVisibility(View.VISIBLE);
-                                        }catch(Exception e){}
-                                    }
-                                }
-                            } catch (Exception er) {
-                                TextView t = (TextView) findViewById(R.id.msg);
-                                if (t != null) {
-                                    Log.w("Network Error", er.toString());
-                                    if(er.toString().contains("End of input at character 0")){
-                                        try{
-                                            JSONObject ipJson = new JSONObject(ip);
-                                            String ipResp = ipJson.getString("ip");
-                                            t.setText(context.getText(R.string.msg_server_offline));
-                                        }catch(Exception e){
-                                            t.setText(context.getText(R.string.msg_noInternet));
-                                        }
-
-                                        t.setVisibility(View.VISIBLE);
-
-                                    }else {
-                                        t.setText(context.getText(R.string.msg_server_notBooksonic));
-                                        t.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }).start();
-        }
     }
 
 	protected void createCustomActionBarView() {
